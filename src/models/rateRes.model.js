@@ -8,6 +8,7 @@ import UserModel from './user_model.js';
 const RateResModel = sequelize.define('RateRes', {
   user_id: {
     type: DataTypes.INTEGER,
+    primaryKey:true,
     references: {
       model: UserModel,
       key: 'user_id'
@@ -15,6 +16,7 @@ const RateResModel = sequelize.define('RateRes', {
   },
   res_id: {
     type: DataTypes.INTEGER,
+    primaryKey:true,
     references: {
       model: RestaurantModel,
       key: 'res_id'
@@ -30,5 +32,8 @@ const RateResModel = sequelize.define('RateRes', {
   tableName: 'rate_res',
   timestamps: false
 });
+
+RateResModel.belongsTo(RestaurantModel,{foreignKey:'res_id', as:'restaurant'})
+RateResModel.belongsTo(UserModel,{foreignKey:'user_id', as: 'user'})
 
 export default RateResModel;

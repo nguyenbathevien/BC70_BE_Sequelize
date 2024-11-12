@@ -9,6 +9,7 @@ import UserModel from './user_model.js';
 const OrderModel = sequelize.define('Order', {
   user_id: {
     type: DataTypes.INTEGER,
+    primaryKey: true,
     references: {
       model: UserModel,
       key: 'user_id'
@@ -16,13 +17,14 @@ const OrderModel = sequelize.define('Order', {
   },
   food_id: {
     type: DataTypes.INTEGER,
+    primaryKey: true,
     references: {
       model: FoodModel,
       key: 'food_id'
     }
   },
   amount: {
-    type: DataTypes.INTEGER
+    type: DataTypes.STRING
   },
   code: {
     type: DataTypes.STRING
@@ -34,5 +36,9 @@ const OrderModel = sequelize.define('Order', {
   tableName: 'order',
   timestamps: false
 });
+
+
+OrderModel.belongsTo(FoodModel,{foreignKey:'food_id', as:'food'})
+OrderModel.belongsTo(UserModel,{foreignKey:'user_id', as: 'user'})
 
 export default OrderModel;
